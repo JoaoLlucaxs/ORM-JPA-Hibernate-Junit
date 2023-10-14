@@ -1,5 +1,7 @@
 package pos.dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
@@ -50,5 +52,16 @@ public class DaoGeneric<E> {
 				+ " where id =" + id).executeUpdate(); //fazendo o delete
 		
 		transaction.commit(); //gravando a alteração
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<E> lista(Class<E> entidade){
+		EntityTransaction transaction=entityManager.getTransaction();
+		transaction.begin();
+		
+		List<E> lista = entityManager.createQuery("from " + entidade.getName()).getResultList();
+		
+		transaction.commit();
+		return lista;
 	}
 }

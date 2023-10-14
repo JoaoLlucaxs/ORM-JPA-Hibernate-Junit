@@ -1,5 +1,7 @@
 package pos.teste;
 
+import java.util.List;
+
 import org.junit.Test;
 
 import pos.dao.DaoGeneric;
@@ -66,5 +68,17 @@ public class TestHibernateUtil {
 		dao.deletarPorId(user);
 		
 		System.out.println(user);
+	}
+	
+	@Test
+	public void testeLista() {
+		DaoGeneric<UsuarioPessoa> dao=new DaoGeneric<UsuarioPessoa>();
+		
+		List<UsuarioPessoa> usuario=dao.lista(UsuarioPessoa.class);
+		
+		for (UsuarioPessoa usuarioPessoa : usuario) {
+			System.out.println(usuarioPessoa);
+			System.out.println("==========================");
+		}
 	}
 }
