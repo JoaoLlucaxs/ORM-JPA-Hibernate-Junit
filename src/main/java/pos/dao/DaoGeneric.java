@@ -26,7 +26,7 @@ public class DaoGeneric<E> {
 		return entidadeSalva;
 	}
 
-	
+	// A seguir duas maneiras
 	@SuppressWarnings("unchecked")
 	public E pesquisar(E entidade) { // pelo id
 		Object id=HibernateUtil.getPrimaryKey(entidade);
@@ -38,5 +38,17 @@ public class DaoGeneric<E> {
 	public E pesquisar(Long id,Class<E> entidade) { // pelo id
 		E e=(E) entityManager.find(entidade,id);
 		return e;
+	}
+	
+	public void deletarPorId(E entidade) {
+		Object id=HibernateUtil.getPrimaryKey(entidade);
+		
+		EntityTransaction transaction= entityManager.getTransaction();
+		transaction.begin();
+		
+		entityManager.createNativeQuery("delete from " + entidade.getClass().getSimpleName().toLowerCase() 
+				+ " where id =" + id).executeUpdate(); //fazendo o delete
+		
+		transaction.commit(); //gravando a alteração
 	}
 }

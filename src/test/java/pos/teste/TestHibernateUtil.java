@@ -41,4 +41,30 @@ public class TestHibernateUtil {
 		
 		System.out.println(user);
 	}
+	
+	@Test
+	public void testeUpdate() {
+		DaoGeneric<UsuarioPessoa> dao=new DaoGeneric<UsuarioPessoa>();
+		
+		UsuarioPessoa user=dao.pesquisar(2L,UsuarioPessoa.class);
+		
+		user.setNome("Frederico");
+		user.setSobrenome("Ribeiro");
+		
+		user=dao.updateMerge(user);
+		
+		System.out.println(user);
+	}
+	
+	@Test
+	public void testeDelete() {
+		DaoGeneric<UsuarioPessoa> dao=new DaoGeneric<UsuarioPessoa>();
+		
+		UsuarioPessoa user=dao.pesquisar(5L,UsuarioPessoa.class);
+		
+		
+		dao.deletarPorId(user);
+		
+		System.out.println(user);
+	}
 }
