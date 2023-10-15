@@ -64,4 +64,8 @@ public class DaoGeneric<E> {
 		transaction.commit();
 		return lista;
 	}
+	
+	public EntityManager getEntityManager() {
+		return entityManager;
+	}
 }

@@ -81,4 +81,41 @@ public class TestHibernateUtil {
 			System.out.println("==========================");
 		}
 	}
+	
+	
+	// criando query especificas
+	@Test
+	public void testQuery() {
+		DaoGeneric<UsuarioPessoa> dao=new DaoGeneric<UsuarioPessoa>();
+		
+		List<UsuarioPessoa> usuario=dao.getEntityManager().createQuery(" from UsuarioPessoa").getResultList();
+		
+		for (UsuarioPessoa usuarioPessoa : usuario) {
+			System.out.println(usuarioPessoa);
+		}
+		
+	}
+	// limitando para trazer apenas os 4 primerios
+	@Test
+	public void testQueryMaxLimit() {
+		DaoGeneric<UsuarioPessoa> dao=new DaoGeneric<UsuarioPessoa>();
+		
+		List<UsuarioPessoa> usuario=dao.getEntityManager().createQuery(" from UsuarioPessoa order by nome")
+				.setMaxResults(4)
+				.getResultList();
+		
+		for (UsuarioPessoa usuarioPessoa : usuario) {
+			System.out.println(usuarioPessoa);
+		}
+		
+	}
+	
+	@Test
+	public void testeQueryPorParametro() {
+		DaoGeneric<UsuarioPessoa> dao=new DaoGeneric<UsuarioPessoa>();
+		
+		List<UsuarioPessoa> usuario=dao.getEntityManager().createQuery(" from UsuarioPessoa where nome= :nome")
+				.setParameter("nome", "Frederico").getResultList();
+	}
+	
 }
