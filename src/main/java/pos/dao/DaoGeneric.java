@@ -65,6 +65,8 @@ public class DaoGeneric<E> {
 		return lista;
 	}
 	
+	
+	// a partir daqui posso customizar meu sql em outra classe
 	public EntityManager getEntityManager() {
 		return entityManager;
 	}

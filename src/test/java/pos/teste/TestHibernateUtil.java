@@ -5,6 +5,7 @@ import java.util.List;
 import org.junit.Test;
 
 import pos.dao.DaoGeneric;
+import pos.model.TelefoneUser;
 import pos.model.UsuarioPessoa;
 
 public class TestHibernateUtil {
@@ -62,7 +63,7 @@ public class TestHibernateUtil {
 	public void testeDelete() {
 		DaoGeneric<UsuarioPessoa> dao=new DaoGeneric<UsuarioPessoa>();
 		
-		UsuarioPessoa user=dao.pesquisar(5L,UsuarioPessoa.class);
+		UsuarioPessoa user=dao.pesquisar(1L,UsuarioPessoa.class);
 		
 		
 		dao.deletarPorId(user);
@@ -116,6 +117,33 @@ public class TestHibernateUtil {
 		
 		List<UsuarioPessoa> usuario=dao.getEntityManager().createQuery(" from UsuarioPessoa where nome= :nome")
 				.setParameter("nome", "Frederico").getResultList();
+	}
+	
+	@Test
+	public void testeNameQuery() {
+		DaoGeneric<UsuarioPessoa> dao=new DaoGeneric<UsuarioPessoa>();
+		
+		List<UsuarioPessoa> usuario=dao.getEntityManager().createNamedQuery("UsuarioPessoa.consultarTodos")
+				.getResultList();
+		
+		for (UsuarioPessoa usuarioPessoa : usuario) {
+			System.out.println(usuarioPessoa);
+		}
+	}
+	
+	@Test
+	public void inserindoTel() {
+		DaoGeneric dao=new DaoGeneric();
+		
+		UsuarioPessoa pessoa= (UsuarioPessoa) dao.pesquisar(2L,UsuarioPessoa.class);
+		
+		TelefoneUser telefone=new TelefoneUser();
+		telefone.setTipo("celular");
+		telefone.setNumero("753535454");
+		telefone.setUsuariopessoa(pessoa);
+		
+		dao.salvar(telefone);
+		
 	}
 	
 }
